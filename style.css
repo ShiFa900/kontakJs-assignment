@@ -1,0 +1,28 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.hidden {
+  display: none;
+}
+
+.table {
+  border: 1px solid;
+}
+
+/* container */
+
+.container {
+  height: 100vh;
+  display: flex;
+}
+
+.content__container {
+  display: flex;
+
+  flex-direction: column;
+  justify-content: center;
+  /* align-items: center; */
+}
