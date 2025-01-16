@@ -16,28 +16,38 @@
   </head>
   <body>
     <div class="container">
+      <div class="body-head-content d-flex justify-content-between">
+        <h2 class="h2">Contact Book</h2>
+        <button class="btn btn-primary form-btn-create">Create new</button>
+      </div>
       <div class="content__container">
         <!-- ada form yang akan di hidden -->
-        <form class="form hidden">
-          <div class="form__row">
-            <label for="name" class="form__label">Name</label>
-            <input name="name" class="form__input" />
-          </div>
-          <div class="form__row">
-            <label for="phone" class="form__label">Phone</label>
-            <input name="phone" class="form__input" />
-          </div>
-          <div class="form__row">
-            <label class="form__label">Sex</label>
-            <input name="sex" class="form__input" />
-          </div>
-          <div class="form__row">
-            <label class="form__label">Address</label>
-            <input name="address" class="form__input" />
+        <form class="form">
+          <div class="row">
+            <div class="col-xl-6">
+              <div class="form-row">
+                <label for="name" class="form-label">Name</label>
+                <input name="name" class="form-control" />
+              </div>
+              <div class="form-row">
+                <label for="phone" class="form-label">Phone</label>
+                <input name="phone" class="form-control" />
+              </div>
+            </div>
+            <div class="col-xl-6">
+              <div class="form-row">
+                <label class="form-label">Sex</label>
+                <input name="sex" class="form-control" />
+              </div>
+              <div class="form-row">
+                <label class="form-label">Address</label>
+                <input name="address" class="form-control" />
+              </div>
+            </div>
           </div>
         </form>
 
-        <div class="table__container">
+        <div class="table-container">
           <table class="table">
             <thead>
               <tr>
@@ -45,6 +55,7 @@
                 <th>Phone</th>
                 <th>Sex</th>
                 <th>Address</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
@@ -53,12 +64,20 @@
                 <td>09878129</td>
                 <td>Male</td>
                 <td>Jln A.Yani Utara</td>
+                <td>
+                  <button class="btn btn-secondary">edit</button>
+                  <button class="btn btn-danger">delete</button>
+                </td>
               </tr>
               <tr>
                 <td>Komi</td>
                 <td>09001292</td>
                 <td>Female</td>
                 <td>Jln.A.Yani Barat</td>
+                <td>
+                  <button class="btn btn-secondary form-btn-edit">edit</button>
+                  <button class="btn btn-danger form-btn-delete">delete</button>
+                </td>
               </tr>
             </tbody>
           </table>
