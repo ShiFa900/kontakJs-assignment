@@ -23,9 +23,13 @@
 }
 
 .form {
-  background-color: antiquewhite;
+  background-color: rgba(250, 235, 215);
   padding: 2rem 3rem;
 
-  width: 55%;
+  /* width: 55%; */
   align-content: center;
+
+  position: fixed;
+  left: 33%;
+  transition: all ease-in 2s;
 }

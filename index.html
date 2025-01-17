@@ -22,14 +22,14 @@
       </div>
       <div class="content__container">
         <!-- ada form yang akan di hidden -->
-        <form class="form">
+        <form class="form hidden">
           <div class="row">
             <div class="col-xl-6">
               <div class="form-row">
                 <label for="name" class="form-label">Name</label>
                 <input name="name" class="form-control" />
               </div>
-              <div class="form-row">
+              <div class="form-row mb-4">
                 <label for="phone" class="form-label">Phone</label>
                 <input name="phone" class="form-control" />
               </div>
@@ -44,6 +44,10 @@
                 <input name="address" class="form-control" />
               </div>
             </div>
+          </div>
+          <div class="btn-wrapper">
+            <button class="btn btn-primary">Save</button>
+            <button class="btn btn-secondary">Cancel</button>
           </div>
         </form>
 
@@ -69,11 +73,11 @@
                   <button class="btn btn-danger">delete</button>
                 </td>
               </tr>
-              <tr>
+              <tr class="table-row">
                 <td>Komi</td>
                 <td>09001292</td>
                 <td>Female</td>
-                <td>Jln.A.Yani Barat</td>
+                <td>Jln A.Yani Barat</td>
                 <td>
                   <button class="btn btn-secondary form-btn-edit">edit</button>
                   <button class="btn btn-danger form-btn-delete">delete</button>
