@@ -1,5 +1,6 @@
 "use strict";
-
+// import("personContactController.js");
+import btnCreate from "./personContactController.js";
 // deklarasikan variable /
 // dua class dengan nama PersonData dan PersonsContact /
 // PersonData untuk deklarasi properti person, PersonsContact untuk parent class yang akan memanggil PersonData /
@@ -14,35 +15,8 @@
 // pisahkan antara model dengan UI (html)
 // model person dengan atribut
 
-const form = document.querySelector(".form");
-const inputName = document.querySelector(".form-input-name");
-const inputPhone = document.querySelector(".form-input-phone");
-const inputSex = document.querySelector(".form-input-sex");
-const inputAddress = document.querySelector(".form-input-address");
-const table = document.querySelector(".table-container");
-const btnCreate = document.querySelector(".form-btn-create");
-const btnEdit = document.querySelector(".form-btn-edit");
-const btnDelete = document.querySelector(".form-btn-delete");
-const containerTableRow = document.querySelector(".table-row");
-
-const conc1 = {
-  name: "Jamal",
-  phone: "9878129",
-  sex: "Male",
-  address: "Rumah Mevvah",
-};
-
-const conc2 = {
-  name: "Komi",
-  phone: "9001292",
-  sex: "Female",
-  address: "Rumah Peri",
-};
-
 // const Persons = [conc1, conc2];
 // console.log(Persons);
-
-const pc = new PersonsContact();
 
 // event
 
@@ -106,4 +80,16 @@ class View {
     containerTableRow.innerHTML = "";
     containerTableRow.insertAdjacentHTML("afterend", html);
   }
+
+  newContact() {
+    btnCreate.addEventListener("click", function (e) {
+      e.preventDefault();
+      form.classList.remove("hidden");
+      inputName.focus();
+
+      // nanti ini harusnya akan memanggil function yang ada di controller untuk create
+    });
+  }
 }
+
+const view = new View();
