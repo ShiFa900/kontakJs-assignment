@@ -12,7 +12,7 @@
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
     />
-    <script defer src="script.js"></script>
+    <script defer src="script/personContactController.js  "></script>
   </head>
   <body>
     <div class="container">
@@ -27,21 +27,21 @@
             <div class="col-xl-6">
               <div class="form-row">
                 <label for="name" class="form-label">Name</label>
-                <input name="name" class="form-control" />
+                <input name="name" class="form-control form-input-name" />
               </div>
               <div class="form-row mb-4">
                 <label for="phone" class="form-label">Phone</label>
-                <input name="phone" class="form-control" />
+                <input name="phone" class="form-control form-input-phone" />
               </div>
             </div>
             <div class="col-xl-6">
               <div class="form-row">
                 <label class="form-label">Sex</label>
-                <input name="sex" class="form-control" />
+                <input name="sex" class="form-control form-input-sex" />
               </div>
               <div class="form-row">
                 <label class="form-label">Address</label>
-                <input name="address" class="form-control" />
+                <input name="address" class="form-control form-input-address" />
               </div>
             </div>
           </div>
@@ -62,8 +62,8 @@
                 <th></th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
+            <tbody class="table-row">
+              <!-- <tr class="table-row">
                 <td>Jamal</td>
                 <td>09878129</td>
                 <td>Male</td>
@@ -72,17 +72,7 @@
                   <button class="btn btn-secondary">edit</button>
                   <button class="btn btn-danger">delete</button>
                 </td>
-              </tr>
-              <tr class="table-row">
-                <td>Komi</td>
-                <td>09001292</td>
-                <td>Female</td>
-                <td>Jln A.Yani Barat</td>
-                <td>
-                  <button class="btn btn-secondary form-btn-edit">edit</button>
-                  <button class="btn btn-danger form-btn-delete">delete</button>
-                </td>
-              </tr>
+              </tr> -->
             </tbody>
           </table>
         </div>
