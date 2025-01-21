@@ -1,6 +1,6 @@
 "use strict";
-// import("personContactController.js");
-import btnCreate from "./personContactController.js";
+// import PersonsContact from "./personsContactController";
+import { PersonsContact } from "./personsContactController.js";
 // deklarasikan variable /
 // dua class dengan nama PersonData dan PersonsContact /
 // PersonData untuk deklarasi properti person, PersonsContact untuk parent class yang akan memanggil PersonData /
@@ -54,17 +54,19 @@ import btnCreate from "./personContactController.js";
 // contact.create();
 
 class View {
-  view() {
-    // function ini akan menampilkan data dummy (saat ini)
-    // dengan render html
-    const person = new PersonData(
-      conc1.name,
-      conc1.phone,
-      conc1.sex,
-      conc1.address
-    );
+  constructor() {
+    this.view();
+  }
 
-    const html = `
+  view() {
+    const containerTableRow = document.querySelector(".table-row");
+    const objPerson = new PersonsContact();
+    const persons = objPerson.getAllData();
+    Object.keys(persons).forEach(function (person) {
+      console.log(persons);
+
+      console.log(person);
+      const html = `
         <tr class="table-row">
           <td>${person.name}</td>
           <td>${person.phone}</td>
@@ -77,11 +79,29 @@ class View {
         </tr>
         `;
 
-    containerTableRow.innerHTML = "";
-    containerTableRow.insertAdjacentHTML("afterend", html);
+      containerTableRow.innerHTML = "";
+      containerTableRow.insertAdjacentHTML("afterend", html);
+    });
+
+    // const html = `
+    //     <tr class="table-row">
+    //       <td>${person.name}</td>
+    //       <td>${person.phone}</td>
+    //       <td>${person.sex}</td>
+    //       <td>${person.address}</td>
+    //       <td>
+    //         <button class="btn btn-secondary">edit</button>
+    //         <button class="btn btn-danger">delete</button>
+    //       </td>
+    //     </tr>
+    //     `;
+
+    // containerTableRow.innerHTML = "";
+    // containerTableRow.insertAdjacentHTML("afterend", html);
   }
 
   newContact() {
+    const btnCreate = document.querySelector(".form-btn-create");
     btnCreate.addEventListener("click", function (e) {
       e.preventDefault();
       form.classList.remove("hidden");
