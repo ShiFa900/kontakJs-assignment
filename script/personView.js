@@ -15,6 +15,10 @@ import { PersonsContact } from "./personsContactController.js";
 // pisahkan antara model dengan UI (html)
 // model person dengan atribut
 
+/**
+ * showing data DONE  
+ */
+
 // const Persons = [conc1, conc2];
 // console.log(Persons);
 
@@ -62,42 +66,24 @@ class View {
     const containerTableRow = document.querySelector(".table-row");
     const objPerson = new PersonsContact();
     const persons = objPerson.getAllData();
-    Object.keys(persons).forEach(function (person) {
-      console.log(persons);
-
-      console.log(person);
+    
+    persons.map((item) => {
       const html = `
-        <tr class="table-row">
-          <td>${person.name}</td>
-          <td>${person.phone}</td>
-          <td>${person.sex}</td>
-          <td>${person.address}</td>
-          <td>
-            <button class="btn btn-secondary">edit</button>
-            <button class="btn btn-danger">delete</button>
-          </td>
-        </tr>
-        `;
+      <tr class="table-row">
+        <td>${item.name}</td>
+        <td>${item.phone}</td>
+        <td>${item.sex}</td>
+        <td>${item.address}</td>
+        <td>
+          <button class="btn btn-secondary">edit</button>
+          <button class="btn btn-danger">delete</button>
+        </td>
+      </tr>
+      `;
 
       containerTableRow.innerHTML = "";
       containerTableRow.insertAdjacentHTML("afterend", html);
     });
-
-    // const html = `
-    //     <tr class="table-row">
-    //       <td>${person.name}</td>
-    //       <td>${person.phone}</td>
-    //       <td>${person.sex}</td>
-    //       <td>${person.address}</td>
-    //       <td>
-    //         <button class="btn btn-secondary">edit</button>
-    //         <button class="btn btn-danger">delete</button>
-    //       </td>
-    //     </tr>
-    //     `;
-
-    // containerTableRow.innerHTML = "";
-    // containerTableRow.insertAdjacentHTML("afterend", html);
   }
 
   newContact() {

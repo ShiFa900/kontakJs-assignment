@@ -37,6 +37,9 @@ export class PersonsContact {
     // nanti akan di ganti dengan local storage
     this.#persons.push(conc1);
     this.#persons.push(conc2);
+    // this.#persons.map((item) => {
+    //   return this.#persons;
+    // });
     let person = [];
     for (let i = 0; i < this.#persons.length; i++) {
       person.push(this.#persons[i]);
