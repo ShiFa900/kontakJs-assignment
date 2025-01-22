@@ -16,7 +16,7 @@ import { PersonsContact } from "./personsContactController.js";
 // model person dengan atribut
 
 /**
- * showing data DONE  
+ * showing data DONE
  */
 
 // const Persons = [conc1, conc2];
@@ -57,16 +57,22 @@ import { PersonsContact } from "./personsContactController.js";
 // const contact = new PersonContact();
 // contact.create();
 
+const btnSave = document.querySelector("btn-save");
+const btnCancel = document.querySelector("btn-cancel");
+
 class View {
+  #personContact = new PersonsContact();
+
   constructor() {
     this.view();
+    this.newContact();
   }
 
   view() {
     const containerTableRow = document.querySelector(".table-row");
-    const objPerson = new PersonsContact();
-    const persons = objPerson.getAllData();
-    
+    const objContact = new PersonsContact();
+    const persons = objContact.getAllData();
+
     persons.map((item) => {
       const html = `
       <tr class="table-row">
@@ -88,14 +94,21 @@ class View {
 
   newContact() {
     const btnCreate = document.querySelector(".form-btn-create");
+    const form = document.querySelector(".form");
+
     btnCreate.addEventListener("click", function (e) {
       e.preventDefault();
       form.classList.remove("hidden");
-      inputName.focus();
+      // inputName.focus();
 
-      // nanti ini harusnya akan memanggil function yang ada di controller untuk create
+      btnSave.addEventListener("click", function (e) {
+        // e.preventDefault();
+        const createContact = this.#personContact.create();
+        if (createContact) {
+          form.classList.add("hidden");
+          return alert("New contact successfully added!");
+        }
+      });
     });
   }
 }
-
-const view = new View();
