@@ -16,7 +16,7 @@ import { PersonsContact } from "./personsContactController.js";
 // model person dengan atribut
 
 /**
- * showing data DONE  
+ * showing data DONE
  */
 
 // const Persons = [conc1, conc2];
@@ -66,7 +66,7 @@ class View {
     const containerTableRow = document.querySelector(".table-row");
     const objPerson = new PersonsContact();
     const persons = objPerson.getAllData();
-    
+
     persons.map((item) => {
       const html = `
       <tr class="table-row">
@@ -91,7 +91,16 @@ class View {
     btnCreate.addEventListener("click", function (e) {
       e.preventDefault();
       form.classList.remove("hidden");
-      inputName.focus();
+
+      btnSave.addEventListener("click", function (e) {
+        // e.preventDefault();
+        const objPerson = new PersonsContact();
+        const createContact = objPerson.create();
+        if (createContact) {
+          form.classList.add("hidden");
+          return alert("New contact successfully added!");
+        }
+      });
 
       // nanti ini harusnya akan memanggil function yang ada di controller untuk create
     });

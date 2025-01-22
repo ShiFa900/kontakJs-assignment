@@ -47,6 +47,18 @@ export class PersonsContact {
     return person;
     // console.log(this.#persons);
   }
+
+  create() {
+    //get input dari form
+    const name = inputName.value;
+    const phone = inputPhone.value;
+    const sex = inputSex.value;
+    const address = inputAddress.value;
+
+    // set to model
+    const setData = new PersonData(name, phone, sex, address);
+    return this.#persons.push(setData);
+  }
 }
 // export default PersonsContact;
 
