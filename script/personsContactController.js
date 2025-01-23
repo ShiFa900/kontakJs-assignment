@@ -1,5 +1,5 @@
 "use strict";
-import { PersonData } from "./personModel.js";
+import { Person, PersonData } from "./personModel.js";
 // deklarasi
 const inputName = document.querySelector(".form-input-name");
 const inputPhone = document.querySelector(".form-input-phone");
@@ -64,3 +64,44 @@ export class PersonsContact {
 
 // const app = new PersonsContact();
 // app.getAllData();
+
+export class PersonController {
+  // properties
+  #inputName;
+  #inputPhone;
+  #inputSex;
+  #inputAddress;
+  #service;
+
+  constructor() {
+    this.service = new LocalStoragePersonService();
+  }
+
+  // operations
+  initForm(inputName, inputPhone, inputSex, inputAddress) {
+    this.#inputName = inputName;
+    this.#inputPhone = inputPhone;
+    this.#inputSex = inputSex;
+    this.#inputAddress = inputAddress;
+  }
+
+  getData() {
+    return this.service.getAll();
+  }
+
+  create() {
+    // TODO form validation here
+    const person = new Person(
+      this.#inputName.value,
+      this.#inputPhone.value,
+      this.#inputSex.value,
+      this.#inputAddress.value
+    );
+
+    return this.service.create(person);
+  }
+
+  update() {}
+
+  delete() {}
+}
