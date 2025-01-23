@@ -1,14 +1,7 @@
 "use strict";
-import { Person, PersonData } from "./personModel.js";
+import { LocalStoragePersonService } from "./LocalStoragePersonService.js";
+import { Person } from "./personModel.js";
 // deklarasi
-const inputName = document.querySelector(".form-input-name");
-const inputPhone = document.querySelector(".form-input-phone");
-const inputSex = document.querySelector(".form-input-sex");
-const inputAddress = document.querySelector(".form-input-address");
-const table = document.querySelector(".table-container");
-const btnCreate = document.querySelector(".form-btn-create");
-const btnEdit = document.querySelector(".form-btn-edit");
-const btnDelete = document.querySelector(".form-btn-delete");
 
 const conc1 = {
   name: "Jamal",
@@ -74,7 +67,32 @@ export class PersonController {
   #service;
 
   constructor() {
-    this.service = new LocalStoragePersonService();
+    this.#service = new LocalStoragePersonService();
+    // this.initData();
+    // this.cleanData();
+  }
+
+  refresh() {
+    const containerTableRow = document.querySelector(".table-row");
+    const persons = this.#service.getAll();
+
+    persons.map((item) => {
+      const html = `
+      <tr class="table-row">
+        <td>${item.name}</td>
+        <td>${item.phone}</td>
+        <td>${item.sex}</td>
+        <td>${item.address}</td>
+        <td>
+          <button class="btn btn-secondary">edit</button>
+          <button class="btn btn-danger">delete</button>
+        </td>
+      </tr>
+      `;
+
+      containerTableRow.innerHTML = "";
+      containerTableRow.insertAdjacentHTML("afterend", html);
+    });
   }
 
   // operations
@@ -83,25 +101,54 @@ export class PersonController {
     this.#inputPhone = inputPhone;
     this.#inputSex = inputSex;
     this.#inputAddress = inputAddress;
+    return;
   }
 
   getData() {
-    return this.service.getAll();
+    return this.#service.getAll();
   }
 
   create() {
     // TODO form validation here
+    console.log(this.#inputName.value);
     const person = new Person(
       this.#inputName.value,
       this.#inputPhone.value,
       this.#inputSex.value,
       this.#inputAddress.value
     );
-
-    return this.service.create(person);
+    // console.log(person);
+    return this.#service.create(person);
   }
 
   update() {}
 
   delete() {}
+
+  cleanData() {
+    this.#service.deleteAll();
+  }
+
+  initData() {
+    const p1 = new Person();
+    p1.name = "Shifa";
+    p1.sex = "F";
+    p1.phone = "283728291789";
+    p1.address = "Kuta, Bali";
+
+    const p2 = new Person();
+    p2.name = "Adhi";
+    p2.sex = "M";
+    p2.phone = "08123458790";
+    p2.address = "Kuta, Bali";
+
+    console.log(
+      "Creating 2 persons data",
+      this.#service.create(p1),
+      this.#service.create(p2)
+    );
+  }
 }
+
+// save berhasil, coba nanti liat bagian untuk simpan datanya
+// tampilkan data yang ada di local storage pada table

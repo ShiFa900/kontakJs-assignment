@@ -1,6 +1,14 @@
 "use strict";
 // import PersonsContact from "./personsContactController";
-import { PersonsContact } from "./personsContactController.js";
+import {
+  PersonController,
+  PersonsContact,
+} from "./personsContactController.js";
+
+const table = document.querySelector(".table-container");
+const btnCreate = document.querySelector(".form-btn-create");
+const btnEdit = document.querySelector(".form-btn-edit");
+const btnDelete = document.querySelector(".form-btn-delete");
 // deklarasikan variable /
 // dua class dengan nama PersonData dan PersonsContact /
 // PersonData untuk deklarasi properti person, PersonsContact untuk parent class yang akan memanggil PersonData /
@@ -57,58 +65,65 @@ import { PersonsContact } from "./personsContactController.js";
 // const contact = new PersonContact();
 // contact.create();
 
-const btnSave = document.querySelector("btn-save");
-const btnCancel = document.querySelector("btn-cancel");
+const btnSave = document.querySelector(".btn-save");
+const btnCancel = document.querySelector(".btn-cancel");
 
-class View {
-  #personContact = new PersonsContact();
+class PersonView {
+  #controller = new PersonController();
 
   constructor() {
-    this.view();
+    // this.view();
+    // this.newContact();
+    this.#controller.refresh();
     this.newContact();
   }
 
-  view() {
-    const containerTableRow = document.querySelector(".table-row");
-    const objContact = new PersonsContact();
-    const persons = objContact.getAllData();
+  // view() {
+  //   const containerTableRow = document.querySelector(".table-row");
+  //   const objContact = new PersonsContact();
+  //   const persons = objContact.getAllData();
 
-    persons.map((item) => {
-      const html = `
-      <tr class="table-row">
-        <td>${item.name}</td>
-        <td>${item.phone}</td>
-        <td>${item.sex}</td>
-        <td>${item.address}</td>
-        <td>
-          <button class="btn btn-secondary">edit</button>
-          <button class="btn btn-danger">delete</button>
-        </td>
-      </tr>
-      `;
+  //   persons.map((item) => {
+  //     const html = `
+  //     <tr class="table-row">
+  //       <td>${item.name}</td>
+  //       <td>${item.phone}</td>
+  //       <td>${item.sex}</td>
+  //       <td>${item.address}</td>
+  //       <td>
+  //         <button class="btn btn-secondary">edit</button>
+  //         <button class="btn btn-danger">delete</button>
+  //       </td>
+  //     </tr>
+  //     `;
 
-      containerTableRow.innerHTML = "";
-      containerTableRow.insertAdjacentHTML("afterend", html);
-    });
-  }
+  //     containerTableRow.innerHTML = "";
+  //     containerTableRow.insertAdjacentHTML("afterend", html);
+  //   });
+  // }
 
   newContact() {
     const btnCreate = document.querySelector(".form-btn-create");
     const form = document.querySelector(".form");
+    const inputName = document.querySelector(".form-input-name");
 
-    btnCreate.addEventListener("click", function (e) {
+    inputName.focus();
+    const inputPhone = document.querySelector(".form-input-phone");
+    const inputSex = document.querySelector(".form-input-sex");
+    const inputAddress = document.querySelector(".form-input-address");
+    const thisClass = this;
+
+    btnSave.addEventListener("click", function (e) {
       e.preventDefault();
-      form.classList.remove("hidden");
-      // inputName.focus();
-
-      btnSave.addEventListener("click", function (e) {
-        // e.preventDefault();
-        const createContact = this.#personContact.create();
-        if (createContact) {
-          form.classList.add("hidden");
-          return alert("New contact successfully added!");
-        }
-      });
+      console.log(inputName.value);
+      thisClass.#controller.initForm(
+        inputName,
+        inputPhone,
+        inputSex,
+        inputAddress
+      );
+      thisClass.#controller.create();
     });
   }
 }
+const view = new PersonView();
