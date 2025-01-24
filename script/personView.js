@@ -19,54 +19,13 @@ const btnDelete = document.querySelector(".form-btn-delete");
 // save to the local storage
 
 //
-// controller person
-// pisahkan antara model dengan UI (html)
-// model person dengan atribut
-
-/**
- * showing data DONE
- */
-
-// const Persons = [conc1, conc2];
-// console.log(Persons);
-
-// event
-
-// class PersonContact {
-//   // array untuk menampung semua data
-//   #contacts = [];
-//   // untuk param address, isi dulu dengan default value, karena ini param optional
-//   constructor(name, phone, sex, address = "rumah") {
-//     this.name = name;
-//     this.phone = phone;
-//     this.sex = sex;
-//     this.address = address;
-//   }
-
-//   // tampilkan data yang ada di local storage
-//   view() {
-//     containerTableRow.innerHTML = "";
-//     const html = `
-//     <td>${this.name}</td>
-//     <td>09001292</td>
-//     <td>Female</td>
-//     <td>Jln A.Yani Barat</td>
-//     `;
-//   }
-
-//   create() {
-//     btnCreate.addEventListener("click", function (e) {
-//       e.preventDefault();
-//       form.classList.remove("hidden");
-//     });
-//   }
-// }
-
-// const contact = new PersonContact();
-// contact.create();
 
 const btnSave = document.querySelector(".btn-save");
 const btnCancel = document.querySelector(".btn-cancel");
+const inputName = document.querySelector(".form-input-name");
+const inputPhone = document.querySelector(".form-input-phone");
+const inputSex = document.querySelector(".form-input-sex");
+const inputAddress = document.querySelector(".form-input-address");
 
 class PersonView {
   #controller = new PersonController();
@@ -78,52 +37,44 @@ class PersonView {
     this.newContact();
   }
 
-  // view() {
-  //   const containerTableRow = document.querySelector(".table-row");
-  //   const objContact = new PersonsContact();
-  //   const persons = objContact.getAllData();
-
-  //   persons.map((item) => {
-  //     const html = `
-  //     <tr class="table-row">
-  //       <td>${item.name}</td>
-  //       <td>${item.phone}</td>
-  //       <td>${item.sex}</td>
-  //       <td>${item.address}</td>
-  //       <td>
-  //         <button class="btn btn-secondary">edit</button>
-  //         <button class="btn btn-danger">delete</button>
-  //       </td>
-  //     </tr>
-  //     `;
-
-  //     containerTableRow.innerHTML = "";
-  //     containerTableRow.insertAdjacentHTML("afterend", html);
-  //   });
-  // }
-
   newContact() {
     const btnCreate = document.querySelector(".form-btn-create");
     const form = document.querySelector(".form");
-    const inputName = document.querySelector(".form-input-name");
-
-    inputName.focus();
-    const inputPhone = document.querySelector(".form-input-phone");
-    const inputSex = document.querySelector(".form-input-sex");
-    const inputAddress = document.querySelector(".form-input-address");
     const thisClass = this;
 
-    btnSave.addEventListener("click", function (e) {
-      e.preventDefault();
-      console.log(inputName.value);
-      thisClass.#controller.initForm(
-        inputName,
-        inputPhone,
-        inputSex,
-        inputAddress
-      );
-      thisClass.#controller.create();
+    btnCreate.addEventListener("click", function () {
+      this.resetForm;
+      document.getElementById("female-option").selected = true;
+      form.classList.remove("hidden");
+      inputName.focus();
+
+      btnSave.addEventListener("click", function (e) {
+        e.preventDefault();
+        const initForm = thisClass.#controller.initForm(
+          inputName,
+          inputPhone,
+          inputSex,
+          inputAddress
+        );
+
+        if (initForm > 0) {
+          alert("Error! Please check your data again.");
+          return;
+        } else {
+          const save = thisClass.#controller.create();
+          if (save) {
+            thisClass.#controller.refresh();
+            form.classList.add("hidden");
+
+            alert("berhasil");
+          }
+        }
+      });
     });
+  }
+
+  resetForm() {
+    inputName = inputPhone = inputSex = inputAddress = "";
   }
 }
 const view = new PersonView();

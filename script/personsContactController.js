@@ -65,6 +65,8 @@ export class PersonController {
   #inputSex;
   #inputAddress;
   #service;
+  f = "Female";
+  m = "Male";
 
   constructor() {
     this.#service = new LocalStoragePersonService();
@@ -73,8 +75,10 @@ export class PersonController {
   }
 
   refresh() {
+    this.cleanTable();
+
     const containerTableRow = document.querySelector(".table-row");
-    const persons = this.#service.getAll();
+    const persons = this.getData();
 
     persons.map((item) => {
       const html = `
@@ -95,13 +99,31 @@ export class PersonController {
     });
   }
 
+  cleanTable() {
+    const containerTableRow = document.querySelector(".table-row");
+    containerTableRow.innerHTML = "";
+    // containerTableRow.insertAdjacentHTML("afterend", html);
+  }
+
   // operations
   initForm(inputName, inputPhone, inputSex, inputAddress) {
+    let valid = 0;
+
+    // nama tidak duplicate dengan alamat yang sama
     this.#inputName = inputName;
-    this.#inputPhone = inputPhone;
-    this.#inputSex = inputSex;
+    console.log(inputPhone.value);
+    this.isContactAlreadyExist(inputName, inputAddress);
+    // phone number tidak boleh kurang dari 7 angka dan tidak lebih dari 15, must be a number dan tidak duplicate
+    if (inputPhone.value.length >= 7 && inputPhone.value.length <= 15) {
+      this.#inputPhone = inputPhone;
+    } else {
+      valid++;
+    }
+
+    this.#inputSex = inputSex.value = "f" ? this.f : this.m;
+
     this.#inputAddress = inputAddress;
-    return;
+    return valid;
   }
 
   getData() {
@@ -110,14 +132,12 @@ export class PersonController {
 
   create() {
     // TODO form validation here
-    console.log(this.#inputName.value);
-    const person = new Person(
-      this.#inputName.value,
-      this.#inputPhone.value,
-      this.#inputSex.value,
-      this.#inputAddress.value
-    );
-    // console.log(person);
+    const person = new Person();
+    person.name = this.#inputName.value;
+    person.phone = this.#inputPhone.value;
+    person.sex = this.#inputSex;
+    person.address = this.#inputAddress.value;
+
     return this.#service.create(person);
   }
 
@@ -147,6 +167,12 @@ export class PersonController {
       this.#service.create(p1),
       this.#service.create(p2)
     );
+  }
+
+  isContactAlreadyExist(column, keyword) {
+    // dapatkan dulu semua data yang ada di local storage
+    const persons = this.#service.getAll();
+    console.log(persons);
   }
 }
 

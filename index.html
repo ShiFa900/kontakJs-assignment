@@ -25,7 +25,7 @@
       </div>
       <div class="content__container">
         <!-- ada form yang akan di hidden -->
-        <form class="form">
+        <form class="form hidden">
           <div class="row">
             <div class="col-xl-6">
               <div class="form-row">
@@ -38,7 +38,9 @@
                 />
               </div>
               <div class="form-row mb-4">
-                <label for="phone" class="form-label">Phone</label>
+                <label for="phone" type="number" class="form-label"
+                  >Phone</label
+                >
                 <input
                   id="phone"
                   name="phone"
@@ -50,12 +52,10 @@
             <div class="col-xl-6">
               <div class="form-row">
                 <label class="form-label">Sex</label>
-                <input
-                  id="sex"
-                  name="sex"
-                  type="text"
-                  class="form-control form-input-sex"
-                />
+                <select class="form-control form-input-sex">
+                  <option value="f" id="female-option">Female</option>
+                  <option value="m" id="male-option">Male</option>
+                </select>
               </div>
               <div class="form-row">
                 <label class="form-label">Address</label>
