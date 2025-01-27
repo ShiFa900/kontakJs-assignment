@@ -1,9 +1,6 @@
 "use strict";
 // import PersonsContact from "./personsContactController";
-import {
-  PersonController,
-  PersonsContact,
-} from "./personsContactController.js";
+import { PersonController } from "./personsContactController.js";
 
 const table = document.querySelector(".table-container");
 const btnCreate = document.querySelector(".form-btn-create");
@@ -43,7 +40,6 @@ class PersonView {
     const thisClass = this;
 
     btnCreate.addEventListener("click", function () {
-      this.resetForm;
       document.getElementById("female-option").selected = true;
       form.classList.remove("hidden");
       inputName.focus();
@@ -63,6 +59,7 @@ class PersonView {
         } else {
           const save = thisClass.#controller.create();
           if (save) {
+            thisClass.#controller.cleanTable();
             thisClass.#controller.refresh();
             form.classList.add("hidden");
 
@@ -74,7 +71,11 @@ class PersonView {
   }
 
   resetForm() {
-    inputName = inputPhone = inputSex = inputAddress = "";
+    inputName.value =
+      inputPhone.value =
+      inputSex.value =
+      inputAddress.value =
+        "";
   }
 }
 const view = new PersonView();

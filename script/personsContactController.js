@@ -18,45 +18,13 @@ const conc2 = {
 };
 // controller
 
-export class PersonsContact {
-  #persons = [];
-
-  // constructor() {
-  //   this.getAllData();
-  // }
-
-  // mendapatkan data yang ada pada storage
-  getAllData() {
-    // nanti akan di ganti dengan local storage
-    this.#persons.push(conc1);
-    this.#persons.push(conc2);
-    // this.#persons.map((item) => {
-    //   return this.#persons;
-    // });
-    let person = [];
-    for (let i = 0; i < this.#persons.length; i++) {
-      person.push(this.#persons[i]);
-    }
-    return person;
-    // console.log(this.#persons);
-  }
-
-  create() {
-    //get input dari form
-    const name = inputName.value;
-    const phone = inputPhone.value;
-    const sex = inputSex.value;
-    const address = inputAddress.value;
-
-    // set to model
-    const setData = new PersonData(name, phone, sex, address);
-    return this.#persons.push(setData);
-  }
-}
 // export default PersonsContact;
 
 // const app = new PersonsContact();
 // app.getAllData();
+
+const containerTableRow = document.querySelector(".table-row");
+const containerTableBody = document.querySelector(".table-body");
 
 export class PersonController {
   // properties
@@ -71,13 +39,12 @@ export class PersonController {
   constructor() {
     this.#service = new LocalStoragePersonService();
     // this.initData();
-    // this.cleanData();
+    this.cleanData();
   }
 
   refresh() {
-    this.cleanTable();
+    // this.cleanTable();
 
-    const containerTableRow = document.querySelector(".table-row");
     const persons = this.getData();
 
     persons.map((item) => {
@@ -91,18 +58,15 @@ export class PersonController {
           <button class="btn btn-secondary">edit</button>
           <button class="btn btn-danger">delete</button>
         </td>
-      </tr>
+        </tr>
       `;
 
-      containerTableRow.innerHTML = "";
-      containerTableRow.insertAdjacentHTML("afterend", html);
+      containerTableBody.insertAdjacentHTML("afterbegin", html);
     });
   }
 
   cleanTable() {
-    const containerTableRow = document.querySelector(".table-row");
-    containerTableRow.innerHTML = "";
-    // containerTableRow.insertAdjacentHTML("afterend", html);
+    containerTableBody.innerHTML = "";
   }
 
   // operations
@@ -110,17 +74,22 @@ export class PersonController {
     let valid = 0;
 
     // nama tidak duplicate dengan alamat yang sama
-    this.#inputName = inputName;
+
+    if (!this.isExist("name", inputName.value)) {
+      this.#inputName = inputName;
+    } else {
+      // perlu validasi ketika nama dan address sama
+      return alert("This name is already exits in database.");
+    }
     console.log(inputPhone.value);
-    this.isContactAlreadyExist(inputName, inputAddress);
     // phone number tidak boleh kurang dari 7 angka dan tidak lebih dari 15, must be a number dan tidak duplicate
     if (inputPhone.value.length >= 7 && inputPhone.value.length <= 15) {
       this.#inputPhone = inputPhone;
     } else {
-      valid++;
+      return 
     }
 
-    this.#inputSex = inputSex.value = "f" ? this.f : this.m;
+    this.#inputSex = inputSex.value == "f" ? this.f : this.m;
 
     this.#inputAddress = inputAddress;
     return valid;
@@ -169,9 +138,19 @@ export class PersonController {
     );
   }
 
-  isContactAlreadyExist(column, keyword) {
+  isExist(column, value, _id) {
     // dapatkan dulu semua data yang ada di local storage
     const persons = this.#service.getAll();
+    let data = [];
+    // proses create
+    if (_id == null) {
+      persons.map((person) => {
+        if (person.column == value) {
+          return true;
+        }
+      });
+    }
+    return false;
     console.log(persons);
   }
 }
