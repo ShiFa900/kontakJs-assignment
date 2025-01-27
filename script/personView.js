@@ -2,8 +2,6 @@
 // import PersonsContact from "./personsContactController";
 import { PersonController } from "./personsContactController.js";
 
-const table = document.querySelector(".table-container");
-const btnCreate = document.querySelector(".form-btn-create");
 const btnEdit = document.querySelector(".form-btn-edit");
 const btnDelete = document.querySelector(".form-btn-delete");
 // deklarasikan variable /
@@ -19,63 +17,78 @@ const btnDelete = document.querySelector(".form-btn-delete");
 
 const btnSave = document.querySelector(".btn-save");
 const btnCancel = document.querySelector(".btn-cancel");
+const btnCreate = document.querySelector(".form-btn-create");
+const form = document.querySelector(".form");
+
 const inputName = document.querySelector(".form-input-name");
 const inputPhone = document.querySelector(".form-input-phone");
 const inputSex = document.querySelector(".form-input-sex");
 const inputAddress = document.querySelector(".form-input-address");
 
+const containerTableRow = document.querySelector(".table-row");
+const containerTableBody = document.querySelector(".table-body");
+
 class PersonView {
   #controller = new PersonController();
 
   constructor() {
-    // this.view();
-    // this.newContact();
+    this.#controller.setBtnCreate(document.querySelector(".btn-save"));
+    this.#controller.setBtnCancel(document.querySelector(".btn-cancel"));
+
     this.#controller.refresh();
-    this.newContact();
   }
 
-  newContact() {
-    const btnCreate = document.querySelector(".form-btn-create");
-    const form = document.querySelector(".form");
-    const thisClass = this;
+  // constructor() {
+  //   // this.view();
+  //   // this.newContact();
+  //   this.#controller.refresh();
+  //   this.newContact();
+  // }
 
-    btnCreate.addEventListener("click", function () {
-      document.getElementById("female-option").selected = true;
-      form.classList.remove("hidden");
-      inputName.focus();
+  // newContact() {
+  //   const thisClass = this;
 
-      btnSave.addEventListener("click", function (e) {
-        e.preventDefault();
-        const initForm = thisClass.#controller.initForm(
-          inputName,
-          inputPhone,
-          inputSex,
-          inputAddress
-        );
+  //   btnCreate.addEventListener("click", function () {
+  //     thisClass.resetForm();
+  //     document.getElementById("female-option").selected = true;
+  //     form.classList.remove("hidden");
+  //     inputName.focus();
 
-        if (initForm > 0) {
-          alert("Error! Please check your data again.");
-          return;
-        } else {
-          const save = thisClass.#controller.create();
-          if (save) {
-            thisClass.#controller.cleanTable();
-            thisClass.#controller.refresh();
-            form.classList.add("hidden");
+  //     btnSave.addEventListener("click", function (e) {
+  //       e.preventDefault();
+  //       const initForm = thisClass.#controller.initForm(
+  //         inputName,
+  //         inputPhone,
+  //         inputSex,
+  //         inputAddress
+  //       );
 
-            alert("berhasil");
-          }
-        }
-      });
-    });
-  }
+  //       if (initForm > 0) {
+  //         alert("Error! Please check your data again.");
+  //         return;
+  //       } else {
+  //         const save = thisClass.#controller.create();
+  //         if (save) {
+  //           thisClass.#controller.cleanTable();
+  //           thisClass.#controller.refresh();
+  //           form.classList.add("hidden");
 
-  resetForm() {
-    inputName.value =
-      inputPhone.value =
-      inputSex.value =
-      inputAddress.value =
-        "";
-  }
+  //           alert("berhasil");
+  //         }
+  //       }
+  //     });
+  //   });
+  // }
+
+  // resetForm() {
+  //   inputName.value =
+  //     inputPhone.value =
+  //     inputSex.value =
+  //     inputAddress.value =
+  //       "";
+  // }
 }
-const view = new PersonView();
+
+document.addEventListener("DOMContentLoaded", (event) => {
+  const view = new PersonView();
+});

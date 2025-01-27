@@ -33,13 +33,72 @@ export class PersonController {
   #inputSex;
   #inputAddress;
   #service;
+  #tableBody;
+  #form;
+  #btnCreate;
+  #btnSave;
+  #btnCancel;
+
   f = "Female";
   m = "Male";
 
   constructor() {
     this.#service = new LocalStoragePersonService();
     // this.initData();
-    this.cleanData();
+    // this.cleanData();
+
+    this.#btnSave = btnSave;
+    this.#btnCancel = btnCancel;
+    this.#inputName = inputName;
+    this.#inputPhone = inputPhone;
+    this.#inputSex = inputSex;
+    this.#inputAddress = inputAddress;
+  }
+
+  setElements(params) {
+    this.initTableBody(params.tableBody);
+    this.initForm(params.form);
+    this.initButtonCreate(params.btnCreate);
+    this.initButtonSave(params.btnSave);
+
+    // dst..
+  }
+
+  initForm(form) {
+    this.#form = form;
+  }
+
+  initTableBody(tableBody) {
+    this.#tableBody = tableBody;
+  }
+
+  initButtonSave(btnSave) {
+    this.#btnSave = btnSave;
+
+    // set event handler here..
+    const thisClass = this;
+    this.#btnSave.addEventListener("click", function (e) {
+      const save = thisClass.create();
+      if (save) {
+        thisClass.cleanTable();
+        thisClass.refresh();
+        thisClass.#form.classList.add("hidden");
+
+        alert("berhasil");
+      }
+    });
+  }
+
+  initButtonCreate(btnCreate) {
+    this.#btnCreate = btnCreate;
+    const thisClass = this;
+    this.#btnCreate.addEventListener("click", function (e) {
+      // clear the form fields first!
+      thisClass.#form.reset();
+
+      // and then show the form
+      thisClass.#form.classList.remove("hidden");
+    });
   }
 
   refresh() {
@@ -61,7 +120,7 @@ export class PersonController {
         </tr>
       `;
 
-      containerTableBody.insertAdjacentHTML("afterbegin", html);
+      this.#tableBody.insertAdjacentHTML("afterbegin", html);
     });
   }
 
@@ -86,10 +145,10 @@ export class PersonController {
     if (inputPhone.value.length >= 7 && inputPhone.value.length <= 15) {
       this.#inputPhone = inputPhone;
     } else {
-      return 
+      return;
     }
 
-    this.#inputSex = inputSex.value == "f" ? this.f : this.m;
+    this.#inputSex = inputSex.value === "f" ? this.f : this.m;
 
     this.#inputAddress = inputAddress;
     return valid;
@@ -99,6 +158,7 @@ export class PersonController {
     return this.#service.getAll();
   }
 
+  // create
   create() {
     // TODO form validation here
     const person = new Person();
@@ -109,6 +169,43 @@ export class PersonController {
 
     return this.#service.create(person);
   }
+
+  setBtnCreate() {}
+
+  // newContact() {
+  //   const thisClass = this;
+
+  //   btnCreate.addEventListener("click", function () {
+  //     thisClass.resetForm();
+  //     document.getElementById("female-option").selected = true;
+  //     form.classList.remove("hidden");
+  //     inputName.focus();
+
+  //     btnSave.addEventListener("click", function (e) {
+  //       e.preventDefault();
+  //       const initForm = thisClass.#controller.initForm(
+  //         inputName,
+  //         inputPhone,
+  //         inputSex,
+  //         inputAddress
+  //       );
+
+  //       if (initForm > 0) {
+  //         alert("Error! Please check your data again.");
+  //         return;
+  //       } else {
+  //         const save = thisClass.#controller.create();
+  //         if (save) {
+  //           thisClass.#controller.cleanTable();
+  //           thisClass.#controller.refresh();
+  //           form.classList.add("hidden");
+
+  //           alert("berhasil");
+  //         }
+  //       }
+  //     });
+  //   });
+  // }
 
   update() {}
 
@@ -155,5 +252,4 @@ export class PersonController {
   }
 }
 
-// save berhasil, coba nanti liat bagian untuk simpan datanya
-// tampilkan data yang ada di local storage pada table
+// data dobel saat melakukan penambahan data di kelipatan dua
