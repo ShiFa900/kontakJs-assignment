@@ -55,7 +55,7 @@ export class LocalStoragePersonService {
 
     // find specific data with the given UUID
     const data = persons.find((p) => p.uuid === uuid);
-    if (data != undefined) {
+    if (data !== undefined) {
       // replace the data
       data.name = person.name;
       data.phone = person.phone;
