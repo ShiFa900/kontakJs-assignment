@@ -14,6 +14,8 @@ class PersonView {
       btnDeleteSelector: ".btn-delete",
       btnSave: document.querySelector(".btn-save"),
       btnCancel: document.querySelector(".btn-cancel"),
+      alertInput: document.querySelector(".alert"),
+      alertContent: document.querySelector(".alert-content"),
 
       form: document.querySelector(".form"),
       inputName: document.querySelector(".form-input-name"),

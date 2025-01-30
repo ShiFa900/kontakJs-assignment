@@ -18,7 +18,9 @@ export class PersonController {
     #btnEditSelector;
     #btnDelete;
     #btnDeleteSelector;
-    #containerTableRow
+    #containerTableRow;
+    #alertInput;
+    #alertContent;
 
     f = "Female";
     m = "Male";
@@ -37,6 +39,8 @@ export class PersonController {
         this.initButtonCancel(params.btnCancel);
         this.#btnEditSelector = params.btnEditSelector;
         this.#btnDeleteSelector = params.btnDeleteSelector;
+        this.#alertInput = params.alertInput;
+        this.#alertContent = params.alertContent;
 
         this.initInputName(params.inputName);
         this.initInputPhone(params.inputPhone);
@@ -48,6 +52,7 @@ export class PersonController {
 
         // dst..
     }
+
 
     initForm(form) {
         this.#form = form;
@@ -96,31 +101,38 @@ export class PersonController {
         // set event handler here..
         const thisClass = this;
         this.#btnSave.addEventListener("click", function (e) {
+            thisClass.#alertInput.classList.add("hidden");
             e.preventDefault();
+
             // validasi
-            if (thisClass.validateForm().length > 0) {
-                return alert("gagal wehh");
-            }
+            const validate = thisClass.validateForm();
+             if(validate.length > 0){
+                 thisClass.#alertInput.classList.remove("hidden");
+                 const html = `
+                <span class="alert">${validate.errorName}</span>
+                <span class="alert">${validate.errorPhone}</span>
+                 `
+                 thisClass.#alertContent.insertAdjacentHTML("beforeend", thisClass.#alertInput);
+             } else {
 
+                 // ini save atau edit?
+                 if (thisClass.#btnSave.classList.contains("editing")) {
+                     const uuid = thisClass.#btnSave.getAttribute("data-id");
+                     // get the actual person data from localStorage
+                     thisClass.update(uuid);
+                     thisClass.refresh();
+                     thisClass.hideForm();
 
-            // ini save atau edit?
-            if (thisClass.#btnSave.classList.contains("editing")) {
-                const uuid = thisClass.#btnSave.getAttribute("data-id");
-                // get the actual person data from localStorage
-                thisClass.update(uuid);
-                thisClass.refresh();
-                thisClass.hideForm();
+                 } else {
+                     const save = thisClass.create();
+                     if (save) {
+                         thisClass.cleanTable();
+                         thisClass.refresh();
+                         thisClass.hideForm();
 
-            } else {
-                const save = thisClass.create();
-                if (save) {
-                    thisClass.cleanTable();
-                    thisClass.refresh();
-                    thisClass.hideForm();
-
-                    alert("berhasil");
-                }
-            }
+                     }
+                 }
+             }
         });
     }
 
@@ -229,25 +241,37 @@ export class PersonController {
     }
 
     validateForm() {
-        let errors = [];
+        let error = {};
+        let errors = []
+        const name = this.#inputName.value;
+        const phone = this.#inputPhone.value;
+        const address = this.#inputAddress.value;
 
         // nama tidak duplicate dengan alamat yang sama
         // jika true, maka ada person dengan data yang sama di local storage, maka tampilkan error
-        if (this.#inputName.length === 0 && this.isPersonExist(this.#inputName.value, this.#inputAddress.value)) {
-            errors.push(["errorName", "Sorry, input name is incorrect."]);
+        if (this.isPersonExist(name, address).length > 0) {
+            // if(this.#inputName.hasAttribute("required") && name === "") {
+            //
+            // }
+            error.errorName = "Sorry, input name is already exists!";
+            errors.push(error.errorName);
+            console.log(error)
         }
+
         // phone number tidak boleh kurang dari 7 angka dan tidak lebih dari 15, must be a number dan tidak duplicate
-        if (this.#inputPhone.length === 0 && this.#inputPhone < 7 && this.#inputPhone > 15) {
-            errors.push(["errorPhone", "Sorry, input phone is incorrect."]);
+        if (phone < 7 && phone > 15 || this.isPhoneExist(phone).length > 0) {
+            error.errorPhone = "Sorry, input phone is incorrect.";
+            errors.push(error.errorPhone);
         }
 
         //this.#inputSex = this.#inputSex.value === "f" ? this.f : this.m;
 
-        if (this.#inputAddress.length === 0 && this.isExist(this.#inputAddress)) {
-            // jika true, brrti ada personnya
-            errors.push(["errorAddress", "Sorry, input address is incorrect."]);
+        // if (this.isPersonExist(name, address)) {
+        //     // jika true, brrti ada personnya
+        //     error.errorAddress = "Sorry, input address is incorrect.";
+        //
+        // }
 
-        }
         return errors;
     }
 
@@ -305,25 +329,38 @@ export class PersonController {
         );
     }
 
-    isExist(column, value) {
-        // dapatkan dulu semua data yang ada di local storage
-        const persons = this.#service.getAll();
-        // let data = [];
+    isPhoneExist(phoneNumber) {
+        let result = [];
+        const persons = this.getData();
         persons.forEach((person) => {
-            if (person[column] === value) {
-                return true;
+            if (person.phone === phoneNumber) {
+                result.push(person);
             }
         })
-        return false;
+        return result;
     }
 
-    isPersonExist(name, address) {
-        const persons = this.#service.getAll();
+    isPersonExist(nameInput, addressInput) {
+        // ini akan menghasilkan object
+        let result = [];
+        const persons = this.getData(); // isinya adalah semua data (objek)
         persons.forEach((person) => {
-            if (person.name === name && person.address === address) {
-                return true;
+            // nama sama dengan alamat yang berbeda, bole
+            // nama belum ada di database juga bole
+            if (person.address === addressInput) {
+                // kemudian cek namanya
+                if (person.name === nameInput) {
+                    result.push(person);
+                }
             }
-        });
-        return false;
+        })
+        return result;
     }
+
+    // validAddress(addressInput) {
+    //     const
+    // }
 }
+
+// tampilkan pesan error di html dengan alertnya
+// error bisa ditampilkan beberapa

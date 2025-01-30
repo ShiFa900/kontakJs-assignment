@@ -29,6 +29,16 @@ export class LocalStoragePersonService {
   }
 
   /**
+   * Returns person data with the given KEY and VALUE
+   * @param key
+   * @param value
+   * @returns Person | undefined
+   */
+  getPersonByKey(key, value) {
+    const persons = this.getAll();
+    return persons.find((p) => p.key === value);
+  }
+  /**
    * Creates a new Person data into the LocalStorage
    * @param {*} person Person
    */

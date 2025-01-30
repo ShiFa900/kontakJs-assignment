@@ -23,16 +23,18 @@
     <div class="content__container">
         <!-- ada form yang akan di hidden -->
         <form class="form hidden">
-            <div class="alert alert-danger hidden"> halo</div>
+            <div class="alert alert-danger hidden">
+                <span class="alert-content"></span>
+            </div>
             <div class="row">
                 <div class="col-xl-6">
                     <div class="form-row">
                         <label for="name" class="form-label">Name</label>
-                        <input id="name" name="name" type="text" class="form-control form-input-name"/>
+                        <input id="name" name="name" type="text" class="form-control form-input-name" required/>
                     </div>
                     <div class="form-row mb-4">
                         <label for="phone" type="number" class="form-label">Phone</label>
-                        <input id="phone" name="phone" type="text" class="form-control form-input-phone"/>
+                        <input id="phone" name="phone" type="text" class="form-control form-input-phone" required/>
                     </div>
                 </div>
                 <div class="col-xl-6">
@@ -45,7 +47,7 @@
                     </div>
                     <div class="form-row">
                         <label class="form-label">Address</label>
-                        <input id="address" name="address" type="text" class="form-control form-input-address"/>
+                        <input id="address" name="address" type="text" class="form-control form-input-address" required/>
                     </div>
                 </div>
             </div>
@@ -71,25 +73,7 @@
                 </tbody>
             </table>
         </div>
-
-        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-             aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        ...
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Understood</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <div></div>
 
     </div>
 </div>

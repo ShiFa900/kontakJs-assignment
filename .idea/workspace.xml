@@ -10,6 +10,7 @@
       <change beforePath="$PROJECT_DIR$/script/LocalStoragePersonService.js" beforeDir="false" afterPath="$PROJECT_DIR$/script/LocalStoragePersonService.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/script/personView.js" beforeDir="false" afterPath="$PROJECT_DIR$/script/personView.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/script/personsContactController.js" beforeDir="false" afterPath="$PROJECT_DIR$/script/personsContactController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/style.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,7 +43,7 @@
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;revision-shifa&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/shifa/Programming/Js/kontakJs-assignment&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/shifa/Programming/Js/complete-javascript-course-master&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -71,7 +72,9 @@
       <workItem from="1737991001485" duration="3449000" />
       <workItem from="1738032699075" duration="8736000" />
       <workItem from="1738047049712" duration="107000" />
-      <workItem from="1738050279698" duration="8940000" />
+      <workItem from="1738050279698" duration="9031000" />
+      <workItem from="1738202694815" duration="13000" />
+      <workItem from="1738225416348" duration="6314000" />
     </task>
     <servers />
   </component>
