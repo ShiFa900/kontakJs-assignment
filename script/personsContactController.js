@@ -67,6 +67,14 @@ export class PersonController {
         this.#form.classList.remove("hidden");
     }
 
+    showAlert() {
+        this.#alertInput.classList.remove("hidden");
+    }
+
+    hideAlert() {
+        this.#alertInput.classList.add("hidden");
+    }
+
     resetForm() {
         this.#form.reset();
     }
@@ -101,38 +109,42 @@ export class PersonController {
         // set event handler here..
         const thisClass = this;
         this.#btnSave.addEventListener("click", function (e) {
-            thisClass.#alertInput.classList.add("hidden");
+            thisClass.#alertInput.innerHTML = "";
+
             e.preventDefault();
 
             // validasi
             const validate = thisClass.validateForm();
-             if(validate.length > 0){
-                 thisClass.#alertInput.classList.remove("hidden");
-                 const html = `
-                <span class="alert">${validate.errorName}</span>
-                <span class="alert">${validate.errorPhone}</span>
+            console.log(validate);
+            if (validate !== []) {
+                thisClass.showAlert();
+                // const html = thisClass.checkAndShowIfValueExist(validate);
+                const html = `
+                <span class="alert-content ${validate.errorName ? "" : "hidden"}">${validate.errorName}</span>
+                <span class="alert-content ${validate.errorPhone ? "" : "hidden"}">${validate.errorPhone}</span>
+                <span class="alert-content ${validate.errorAddress ? "" : "hidden"}">${validate.errorAddress}</span>
                  `
-                 thisClass.#alertContent.insertAdjacentHTML("beforeend", thisClass.#alertInput);
-             } else {
+                thisClass.#alertInput.insertAdjacentHTML("afterbegin", html);
+            } else {
 
-                 // ini save atau edit?
-                 if (thisClass.#btnSave.classList.contains("editing")) {
-                     const uuid = thisClass.#btnSave.getAttribute("data-id");
-                     // get the actual person data from localStorage
-                     thisClass.update(uuid);
-                     thisClass.refresh();
-                     thisClass.hideForm();
+                // ini save atau edit?
+                if (thisClass.#btnSave.classList.contains("editing")) {
+                    const uuid = thisClass.#btnSave.getAttribute("data-id");
+                    // get the actual person data from localStorage
+                    thisClass.update(uuid);
+                    thisClass.refresh();
+                    thisClass.hideForm();
 
-                 } else {
-                     const save = thisClass.create();
-                     if (save) {
-                         thisClass.cleanTable();
-                         thisClass.refresh();
-                         thisClass.hideForm();
+                } else {
+                    const save = thisClass.create();
+                    if (save) {
+                        thisClass.cleanTable();
+                        thisClass.refresh();
+                        thisClass.hideForm();
 
-                     }
-                 }
-             }
+                    }
+                }
+            }
         });
     }
 
@@ -142,7 +154,8 @@ export class PersonController {
         this.#btnCancel.addEventListener("click", function (e) {
             e.preventDefault();
             that.hideForm();
-
+            that.#alertInput.innerHTML = "";
+            that.hideAlert()
         })
     }
 
@@ -241,36 +254,32 @@ export class PersonController {
     }
 
     validateForm() {
-        let error = {};
         let errors = []
         const name = this.#inputName.value;
         const phone = this.#inputPhone.value;
         const address = this.#inputAddress.value;
 
-        // nama tidak duplicate dengan alamat yang sama
-        // jika true, maka ada person dengan data yang sama di local storage, maka tampilkan error
-        if (this.isPersonExist(name, address).length > 0) {
-            // if(this.#inputName.hasAttribute("required") && name === "") {
-            //
-            // }
-            error.errorName = "Sorry, input name is already exists!";
-            errors.push(error.errorName);
-            console.log(error)
+        if (name === "") {
+            errors["errorName"] = "Please enter a name";
+        } else if (this.isPersonExist(name, address).length > 0) {
+            // nama tidak duplicate dengan alamat yang sama
+            // jika true, maka ada person dengan data yang sama di local storage, maka tampilkan error
+            errors["errorName"] = "Sorry, input name is already exists!";
         }
 
-        // phone number tidak boleh kurang dari 7 angka dan tidak lebih dari 15, must be a number dan tidak duplicate
-        if (phone < 7 && phone > 15 || this.isPhoneExist(phone).length > 0) {
-            error.errorPhone = "Sorry, input phone is incorrect.";
-            errors.push(error.errorPhone);
+        if (phone === "") {
+            errors["errorPhone"] = "Please enter a phone number";
+        } else if (phone.length <= 7 && phone.length >= 15 || typeof phone !== "number") {
+            // phone number tidak boleh kurang dari 7 angka dan tidak lebih dari 15, must be a number dan tidak duplicate
+            errors["errorPhone"] = "Sorry, phone number must be a number that greater than 7 and less than 15";
+        } else if(this.isPhoneExist(phone).length > 0){
+            errors["errorPhone"] = "Sorry, input phone number is already exists!";
         }
 
-        //this.#inputSex = this.#inputSex.value === "f" ? this.f : this.m;
+        if (address === "") {
+            errors["errorAddress"] = "Please enter an address";
+        }
 
-        // if (this.isPersonExist(name, address)) {
-        //     // jika true, brrti ada personnya
-        //     error.errorAddress = "Sorry, input address is incorrect.";
-        //
-        // }
 
         return errors;
     }
@@ -355,6 +364,14 @@ export class PersonController {
             }
         })
         return result;
+    }
+
+    checkAndShowIfValueExist(array) {
+        let result = [];
+
+
+        return result;
+
     }
 
     // validAddress(addressInput) {

@@ -34,3 +34,7 @@
   transition: all ease-in 2s;
 }
 
+.alert-content{
+  display: flex;
+  flex-direction: column;
+}
