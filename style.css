@@ -1,40 +1,66 @@
 * {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
 }
 
 .hidden {
-  display: none;
+    display: none;
 }
+
+h2 {
+    font-size: 2rem;
+}
+
 
 /* container */
 
 .container {
-  margin-top: 3rem;
+    margin-top: 3rem;
 }
 
 .body-head-content {
-  margin-bottom: 2rem;
+    margin-bottom: 2rem;
 }
 
 .form-row {
-  margin-top: 1rem;
+    margin-top: 1rem;
 }
 
-.form {
-  background-color: rgba(250, 235, 215);
-  padding: 2rem 3rem;
+.card-modal  {
+    width: 35%;
+    align-content: center;
 
-  /* width: 55%; */
-  align-content: center;
+    position: fixed;
+    left: 32%;
 
-  position: fixed;
-  left: 33%;
-  transition: all ease-in 2s;
+    transition: opacity 1s ease;
 }
 
-.alert-content{
-  display: flex;
-  flex-direction: column;
+.form-input {
+    background-color: rgba(250, 235, 215);
+    padding: 2rem 3rem;
+}
+
+
+.alert-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.confirm-card {
+    background-color: rgba(250, 235, 215);
+    padding: 2rem 0;
+    top: 23%;
+
+}
+
+.confirm-header, .confirm-body{
+    border-bottom: 1px solid #565e64;
+    padding: 0 2rem;
+}
+
+.confirm-footer{
+    padding: 0 2rem;
+
 }

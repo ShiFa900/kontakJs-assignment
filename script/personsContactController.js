@@ -21,6 +21,7 @@ export class PersonController {
     #containerTableRow;
     #alertInput;
     #alertContent;
+    #confirmCard;
 
     f = "Female";
     m = "Male";
@@ -41,6 +42,7 @@ export class PersonController {
         this.#btnDeleteSelector = params.btnDeleteSelector;
         this.#alertInput = params.alertInput;
         this.#alertContent = params.alertContent;
+        this.#confirmCard = params.confirmCard;
 
         this.initInputName(params.inputName);
         this.initInputPhone(params.inputPhone);
@@ -73,6 +75,14 @@ export class PersonController {
 
     hideAlert() {
         this.#alertInput.classList.add("hidden");
+    }
+
+    showConfirm() {
+        this.#confirmCard.classList.remove("hidden");
+    }
+
+    hideConfirm() {
+        this.#confirmCard.classList.add("hidden");
     }
 
     resetForm() {
@@ -109,43 +119,53 @@ export class PersonController {
         // set event handler here..
         const thisClass = this;
         this.#btnSave.addEventListener("click", function (e) {
-            thisClass.#alertInput.innerHTML = "";
+                thisClass.#alertInput.innerHTML = "";
 
-            e.preventDefault();
+                e.preventDefault();
 
-            // validasi
-            const validate = thisClass.validateForm();
-            console.log(validate);
-            if (validate !== []) {
-                thisClass.showAlert();
-                // const html = thisClass.checkAndShowIfValueExist(validate);
-                const html = `
-                <span class="alert-content ${validate.errorName ? "" : "hidden"}">${validate.errorName}</span>
-                <span class="alert-content ${validate.errorPhone ? "" : "hidden"}">${validate.errorPhone}</span>
-                <span class="alert-content ${validate.errorAddress ? "" : "hidden"}">${validate.errorAddress}</span>
-                 `
-                thisClass.#alertInput.insertAdjacentHTML("afterbegin", html);
-            } else {
+                // validasi
+                const validate = thisClass.validateForm();
+                let html = "";
+                console.log(validate);
+                if (Object.keys(validate).length > 0) {
+                    thisClass.showAlert();
 
-                // ini save atau edit?
-                if (thisClass.#btnSave.classList.contains("editing")) {
-                    const uuid = thisClass.#btnSave.getAttribute("data-id");
-                    // get the actual person data from localStorage
-                    thisClass.update(uuid);
-                    thisClass.refresh();
-                    thisClass.hideForm();
+                    if (validate.hasOwnProperty('errorName')) {
+                        html += `<span class="alert-content">- ${validate.errorName}</span>`
+                    }
 
+                    if (validate.hasOwnProperty('errorPhone')) {
+                        html += `<span class="alert-content">- ${validate.errorPhone}</span>`
+                    }
+
+                    if (validate.hasOwnProperty('errorAddress')) {
+                        html += `<span class="alert-content">- ${validate.errorAddress}</span>`
+                    }
+
+                    thisClass.#alertInput.insertAdjacentHTML("afterbegin", html);
                 } else {
-                    const save = thisClass.create();
-                    if (save) {
-                        thisClass.cleanTable();
+
+                    // ini save atau edit?
+                    if (thisClass.#btnSave.classList.contains("editing")) {
+                        const uuid = thisClass.#btnSave.getAttribute("data-id");
+                        // get the actual person data from localStorage
+                        thisClass.update(uuid);
                         thisClass.refresh();
                         thisClass.hideForm();
 
+                    } else {
+                        const save = thisClass.create();
+                        if (save) {
+                            thisClass.cleanTable();
+                            thisClass.refresh();
+                            thisClass.hideForm();
+
+                        }
                     }
                 }
             }
-        });
+        )
+        ;
     }
 
     initButtonCancel(btnCancel) {
@@ -155,7 +175,8 @@ export class PersonController {
             e.preventDefault();
             that.hideForm();
             that.#alertInput.innerHTML = "";
-            that.hideAlert()
+            that.hideAlert();
+            that.hideConfirm();
         })
     }
 
@@ -208,13 +229,13 @@ export class PersonController {
         const that = this;
         this.#tableBody.querySelectorAll(this.#btnDeleteSelector).forEach(btn => {
             btn.addEventListener("click", function (event) {
-                // dapatkan person yang akan di delete
+                that.showConfirm();
                 //const person = that.#service.getByUuid(btn.getAttribute("data-id"))
                 // tampilkan konfirmasi form sebelum delete
                 // delete dilakukan
 
-                that.delete(btn.getAttribute("data-id"))
-                that.refresh()
+                // that.delete(btn.getAttribute("data-id"))
+                // that.refresh()
 
 
             })
@@ -254,7 +275,7 @@ export class PersonController {
     }
 
     validateForm() {
-        let errors = []
+        const errors = {}
         const name = this.#inputName.value;
         const phone = this.#inputPhone.value;
         const address = this.#inputAddress.value;
@@ -269,17 +290,16 @@ export class PersonController {
 
         if (phone === "") {
             errors["errorPhone"] = "Please enter a phone number";
-        } else if (phone.length <= 7 && phone.length >= 15 || typeof phone !== "number") {
+        } else if (this.isNumeric(phone) && (phone.length <= 7 || phone.length >= 15)) {
             // phone number tidak boleh kurang dari 7 angka dan tidak lebih dari 15, must be a number dan tidak duplicate
-            errors["errorPhone"] = "Sorry, phone number must be a number that greater than 7 and less than 15";
-        } else if(this.isPhoneExist(phone).length > 0){
+            errors["errorPhone"] = "Sorry, phone number must be a number that greater than 7 or less than 15";
+        } else if (this.isPhoneExist(phone).length > 0) {
             errors["errorPhone"] = "Sorry, input phone number is already exists!";
         }
 
         if (address === "") {
             errors["errorAddress"] = "Please enter an address";
         }
-
 
         return errors;
     }
@@ -356,27 +376,16 @@ export class PersonController {
         persons.forEach((person) => {
             // nama sama dengan alamat yang berbeda, bole
             // nama belum ada di database juga bole
-            if (person.address === addressInput) {
-                // kemudian cek namanya
-                if (person.name === nameInput) {
-                    result.push(person);
-                }
+            if (person.address === addressInput && person.name === nameInput) {
+                result.push(person);
             }
         })
         return result;
     }
 
-    checkAndShowIfValueExist(array) {
-        let result = [];
-
-
-        return result;
-
+    isNumeric(value) {
+        return /^\d+$/.test(value);
     }
-
-    // validAddress(addressInput) {
-    //     const
-    // }
 }
 
 // tampilkan pesan error di html dengan alertnya

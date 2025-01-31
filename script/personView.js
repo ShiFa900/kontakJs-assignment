@@ -16,6 +16,7 @@ class PersonView {
       btnCancel: document.querySelector(".btn-cancel"),
       alertInput: document.querySelector(".alert"),
       alertContent: document.querySelector(".alert-content"),
+      confirmCard: document.querySelector(".confirm-card"),
 
       form: document.querySelector(".form"),
       inputName: document.querySelector(".form-input-name"),

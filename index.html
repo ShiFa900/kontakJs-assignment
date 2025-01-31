@@ -22,7 +22,7 @@
     </div>
     <div class="content__container">
         <!-- ada form yang akan di hidden -->
-        <form class="form hidden">
+        <form class="form hidden form-input card-modal">
             <div class="alert alert-danger hidden"></div>
             <div class="row">
                 <div class="col-xl-6">
@@ -71,8 +71,27 @@
                 </tbody>
             </table>
         </div>
-        <div></div>
 
+<!--        <form class="form hidden">-->
+<!--            <div class="alert alert-danger hidden"></div>-->
+
+<!--            <div class="btn-wrapper">-->
+<!--                <button class="btn btn-primary btn-save" type="button">Save</button>-->
+<!--                <button class="btn btn-secondary btn-cancel" type="button">Cancel</button>-->
+<!--            </div>-->
+<!--        </form>-->
+        <div class="confirm-card card-modal hidden">
+            <div class="confirm-header">
+                <h3 class="confirm-title">Confirmation</h3>
+            </div>
+            <div class="confirm-body">
+                <p>Are you sure want to delete this data?</p>
+            </div>
+            <div class="confirm-footer mt-3">
+                <button class="btn btn-danger btn-delete" type="button">Delete</button>
+                <button class="btn btn-secondary btn-cancel" type="button">Cancel</button>
+            </div>
+        </div>
     </div>
 </div>
 </body>
