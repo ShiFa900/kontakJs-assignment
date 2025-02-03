@@ -196,6 +196,15 @@ export class PersonController {
 
     initButtonDelete(btnDelete) {
         this.#btnDelete = btnDelete;
+        const that = this;
+        window.onload = function () {
+            that.#btnDelete.addEventListener("click", function (e) {
+                e.preventDefault();
+                that.showConfirm();
+
+            });
+        }
+
     }
 
     initButtonEdit(btnEdit) {
@@ -229,15 +238,8 @@ export class PersonController {
         const that = this;
         this.#tableBody.querySelectorAll(this.#btnDeleteSelector).forEach(btn => {
             btn.addEventListener("click", function (event) {
-                that.showConfirm();
-                //const person = that.#service.getByUuid(btn.getAttribute("data-id"))
-                // tampilkan konfirmasi form sebelum delete
-                // delete dilakukan
-
-                // that.delete(btn.getAttribute("data-id"))
-                // that.refresh()
-
-
+                event.preventDefault();
+                that.delete(btn.getAttribute("data-id"));
             })
         })
     }
@@ -265,7 +267,7 @@ export class PersonController {
 
         });
         this.setEventHandlerForEditButton();
-        this.setEventHandlerForDeleteButton();
+        this.initButtonDelete();
 
     }
 
