@@ -197,13 +197,10 @@ export class PersonController {
     initButtonDelete(btnDelete) {
         this.#btnDelete = btnDelete;
         const that = this;
-        window.onload = function () {
-            that.#btnDelete.addEventListener("click", function (e) {
+            this.#btnDelete.addEventListener("click", function (e) {
                 e.preventDefault();
-                that.showConfirm();
-
+                that.delete(that.#btnDelete.getAttribute("data-id"));
             });
-        }
 
     }
 
@@ -239,7 +236,12 @@ export class PersonController {
         this.#tableBody.querySelectorAll(this.#btnDeleteSelector).forEach(btn => {
             btn.addEventListener("click", function (event) {
                 event.preventDefault();
-                that.delete(btn.getAttribute("data-id"));
+                const person = that.#service.getByUuid(btn.getAttribute("data-id"));
+                that.showConfirm();
+
+                // tambahkan atribut pada button delete dan cancel yang ada di confirmation card
+                // btn.setAttribute("data-id", )
+                that.#btnDelete.setAttribute("data-id");
             })
         })
     }
@@ -258,7 +260,7 @@ export class PersonController {
         <td>${item.address}</td>
         <td>
           <button class="btn btn-secondary btn-edit" data-id="${item.uuid}">edit</button>
-          <button class="btn btn-danger btn-delete" data-id="${item.uuid}">delete</button>
+          <button class="btn btn-danger form-btn-delete">delete</button>
         </td>
         </tr>
       `;
@@ -267,7 +269,7 @@ export class PersonController {
 
         });
         this.setEventHandlerForEditButton();
-        this.initButtonDelete();
+        this.setEventHandlerForDeleteButton();
 
     }
 
