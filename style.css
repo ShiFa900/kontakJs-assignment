@@ -12,6 +12,10 @@ h2 {
     font-size: 2rem;
 }
 
+h3 {
+    font-size: 1.5rem !important;
+}
+
 
 /* container */
 
@@ -27,7 +31,7 @@ h2 {
     margin-top: 1rem;
 }
 
-.card-modal  {
+.card-modal {
     width: 35%;
     align-content: center;
 
@@ -50,17 +54,20 @@ h2 {
 
 .confirm-card {
     background-color: rgba(250, 235, 215);
-    padding: 2rem 0;
     top: 23%;
+    padding: 1.3rem 3rem;
 
 }
 
-.confirm-header, .confirm-body{
-    border-bottom: 1px solid #565e64;
-    padding: 0 2rem;
+.confirm-body{
+   margin-bottom: 1.2rem;
 }
 
-.confirm-footer{
-    padding: 0 2rem;
+.confirm-header {
+    margin: 1.2rem 0;
+    border-bottom: 1px solid rgba(86, 94, 100, 0.51);
+}
 
+p {
+    margin-bottom: 0 !important;
 }
